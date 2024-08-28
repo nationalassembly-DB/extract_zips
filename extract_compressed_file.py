@@ -52,6 +52,7 @@ def process_folder(folder_path, cnt):
                 if is_zip_encrypted(compress_file_path):
                     e_e = "암호화된 압축파일"
                     save_log(compress_file_path, e_e)
+                    error_files.append(compress_file_path)
                     continue  # 암호화된 압축 파일 건너뛰기
             file_list = extract_bandizip(compress_file_path)
             for file in file_list:
