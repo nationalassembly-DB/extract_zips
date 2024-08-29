@@ -20,8 +20,8 @@ def process_folder(folder_path):
         compress_ext = {'.zip', '.egg', '.7z', '.alz'}
         # .vol2.egg ~ .vol50.egg
         exclude_patterns = {f'.vol{i}.egg' for i in range(2, 51)}
-        compress_file_path = [os.path.join('\\\\?\\', root, f) for f in files if f.lower().endswith(tuple(compress_ext)) and not any(
-            f.lower().endswith(pattern) for pattern in exclude_patterns)]
+        compress_file_path = [os.path.join('\\\\?\\', root, f) for f in files if f.lower().endswith(
+            tuple(compress_ext)) and not any(f.lower().endswith(pattern) for pattern in exclude_patterns)]
         exclude_files_path = [os.path.join('\\\\?\\', root, f) for f in files if f.lower().endswith(
             tuple(exclude_patterns))]
 
