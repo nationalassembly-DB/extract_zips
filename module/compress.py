@@ -1,3 +1,9 @@
+"""
+반디집을 사용하여 압축해제를 시도합니다.
+암호가 걸린 압축파일은 패스합니다.
+"""
+
+
 import os
 import subprocess
 import zipfile
@@ -19,18 +25,16 @@ def extract_bandizip(compress_file_path):
                 check=True
             )
         else:
-            # e_s = "동일 폴더명 존재"
-            # save_log(compress_file_path, e_s)
             error_files.append(compress_file_path)
             return []
         return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
     except Exception:
-        # save_log(compress_file_path, e)
         error_files.append(compress_file_path)
         return []
 
 
 def is_zip_encrypted(zip_path):
+    """압축파일이 암호화가 되어있는지의 여부 확인"""
     try:
         with zipfile.ZipFile(zip_path, 'r') as zip_file:
             for zip_info in zip_file.infolist():
@@ -40,4 +44,5 @@ def is_zip_encrypted(zip_path):
             return False
     except Exception as e:
         print(f"[{e}] {zip_path}")
+        error_files.append(zip_path)
         return False
