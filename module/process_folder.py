@@ -11,6 +11,7 @@ import os
 
 
 from module.compress import extract_bandizip, is_zip_encrypted, error_files
+from module.create_metadata import create_metadata
 
 
 def process_folder(folder_path):
@@ -42,5 +43,8 @@ def process_folder(folder_path):
     if exclude_files_path:
         for rm_file in exclude_files_path:
             os.remove(rm_file)
+
+    if not is_compressed_exists:
+        create_metadata(folder_path)
 
     return is_compressed_exists
