@@ -2,8 +2,6 @@ import os
 import subprocess
 import zipfile
 
-from extract_compressed_file import save_log
-
 error_files = []
 
 
@@ -21,13 +19,13 @@ def extract_bandizip(compress_file_path):
                 check=True
             )
         else:
-            e_s = "동일 폴더명 존재"
-            save_log(compress_file_path, e_s)
+            # e_s = "동일 폴더명 존재"
+            # save_log(compress_file_path, e_s)
             error_files.append(compress_file_path)
             return []
         return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
-    except Exception as e:
-        save_log(compress_file_path, e)
+    except Exception:
+        # save_log(compress_file_path, e)
         error_files.append(compress_file_path)
         return []
 
