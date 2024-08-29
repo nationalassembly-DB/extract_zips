@@ -29,7 +29,7 @@ def _save_excel(df, ws, last_row):
         blank = str(row['위원회']).find(' ')
         under_bar = str(row['위원회']).find('_')
         if blank != -1 and under_bar != -1:
-            cmt = str(row['위원회'])[blank+1:under_bar-1]
+            cmt = str(row['위원회'])[blank+1:under_bar]
         elif blank != -1 and under_bar == -1:
             cmt = str(row['위원회'])[blank+1:]
         else:
