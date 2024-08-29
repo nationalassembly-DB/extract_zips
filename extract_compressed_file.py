@@ -2,7 +2,6 @@ import os
 import pandas as pd
 
 from module.compress import extract_bandizip, is_zip_encrypted, error_files
-from module.log import save_log
 
 
 def process_folder(folder_path, cnt):
@@ -33,20 +32,21 @@ def process_folder(folder_path, cnt):
                     if is_compressed_exists == False:
                         print("내부 압축파일 발견. 스크립트가 한번 더 진행됩니다.")
                         is_compressed_exists = True
-                    results.append(
-                        {'File Name': compress_file_path, 'Extracted File': file})
 
     if exclude_files:
         for rm_file in exclude_files:
             rm_file_path = os.path.join('\\\\?\\', root, rm_file)
             os.remove(rm_file_path)
 
-    df = pd.DataFrame(results)
-    df.to_excel(os.path.join('\\\\?\\',
-                             folder_path, f'extraction_report({cnt}).xlsx'), index=False)
-    print(f"엑셀 파일이 생성되었습니다: extraction_report({cnt}).xlsx")
-
     return is_compressed_exists
+
+
+def save_log(dst, e):
+    """로그를 입력폴더 경로 내에 생성"""
+    print(f"{e} 압축해제 오류 발생")
+    log_dir = os.path.join('\\\\?\\', folder_path, "log.txt")
+    with open(log_dir, 'a') as file:
+        file.write(f'Error ({e}) , Source File ({dst})\n')
 
 
 if __name__ == "__main__":

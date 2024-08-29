@@ -1,7 +1,8 @@
-from module.log import save_log
 import os
 import subprocess
 import zipfile
+
+from extract_compressed_file import save_log
 
 error_files = []
 
