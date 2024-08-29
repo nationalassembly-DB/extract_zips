@@ -4,9 +4,6 @@
 """
 
 
-# pylint: diable=W0703
-
-
 import os
 import subprocess
 import zipfile
@@ -31,7 +28,7 @@ def extract_bandizip(compress_file_path):
             error_files.append(compress_file_path)
             return []
         return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
-    except Exception:
+    except Exception:  # pylint: disable=W0703
         error_files.append(compress_file_path)
         return []
 
@@ -45,6 +42,6 @@ def is_zip_encrypted(zip_path):
                     error_files.append(zip_path)
                     return True
             return False
-    except Exception:
+    except Exception:  # pylint: disable=W0703
         error_files.append(zip_path)
         return False
