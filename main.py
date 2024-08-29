@@ -6,7 +6,9 @@ main함수.
 
 import os
 
+
 from module.process_folder import process_folder
+
 
 if __name__ == "__main__":
     folder_path = input("폴더 경로를 입력하세요 : ")
