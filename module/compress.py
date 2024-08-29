@@ -8,7 +8,7 @@ import os
 import subprocess
 import zipfile
 
-error_files = []
+error_files = {}
 
 
 def extract_bandizip(compress_file_path):
@@ -25,11 +25,11 @@ def extract_bandizip(compress_file_path):
                 check=True
             )
         else:
-            error_files.append(compress_file_path)
+            error_files[compress_file_path] = '복사본'
             return []
         return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
     except Exception:  # pylint: disable=W0703
-        error_files.append(compress_file_path)
+        error_files[compress_file_path] = '압축파일이상'
         return []
 
 
@@ -39,9 +39,9 @@ def is_zip_encrypted(zip_path):
         with zipfile.ZipFile(zip_path, 'r') as zip_file:
             for zip_info in zip_file.infolist():
                 if zip_info.flag_bits & 0x1:
-                    error_files.append(zip_path)
+                    error_files[zip_path] = '암호화'
                     return True
             return False
     except Exception:  # pylint: disable=W0703
-        error_files.append(zip_path)
+        error_files[zip_path] = '압축파일이상'
         return False
