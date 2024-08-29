@@ -45,6 +45,7 @@ def process_folder(folder_path):
             os.remove(rm_file)
 
     if not is_compressed_exists:
+        print("파일리스트를 생성합니다")
         create_metadata(folder_path)
 
     return is_compressed_exists
