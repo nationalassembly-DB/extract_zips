@@ -9,6 +9,7 @@ import pandas as pd
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import PatternFill
 from natsort import natsorted
+from compress import error_files
 
 
 def create_metadata(folder_path):
@@ -23,11 +24,13 @@ def create_metadata(folder_path):
 
 def _save_excel(df, ws, last_row):
     """엑셀파일에 df를 불러와 값을 입력합니다"""
-    tmp_idx = 0
     for index, row in df.iterrows():
-        row_index = last_row + index + 1 + tmp_idx
+        row_index = last_row + index + 1
         blank = str(row['위원회']).find(' ')
-        if blank != -1:
+        under_bar = str(row['위원회']).find('_')
+        if blank != -1 and under_bar != -1:
+            cmt = str(row['위원회'])[blank+1:under_bar-1]
+        elif blank != -1 and under_bar == -1:
             cmt = str(row['위원회'])[blank+1:]
         else:
             cmt = row['위원회']
@@ -40,6 +43,10 @@ def _save_excel(df, ws, last_row):
         ws.cell(row=row_index, column=4, value=row['경로'])
         ws.cell(row=row_index, column=5, value=row['확장자'])
         ws.cell(row=row_index, column=6, value=row['파일크기'])
+        if row['파일크기'] == 0:
+            ws.cell(row=row_index, column=7, value='0바이트')
+        if row['실제경로'] in error_files:
+            ws.cell(row=row_index, column=7, value=error_files[row['실제경로']])
 
 
 def _load_excel(excel_file_path):
@@ -67,7 +74,7 @@ def _dir_to_dic(folder_path):
 
     for root, _, files in os.walk(folder_path):
         for file in natsorted(files):
-            file_extension = pathlib.Path(file).suffix.lower()
+            file_extension = pathlib.Path(file).suffix.lstrip('.').lower()
             file_path = os.path.join('\\\\?\\', root, file)
             relative_path = os.path.relpath(
                 file_path, os.path.dirname(folder_path))
