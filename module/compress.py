@@ -27,10 +27,12 @@ def extract_bandizip(compress_file_path):
             )
         else:
             error_files[compress_file_path] = '복사본'
+            _remove_empty_folder(zips_extract_folder)
             return []
         return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
     except Exception:  # pylint: disable=W0703
         error_files[compress_file_path] = '압축파일이상'
+        _remove_empty_folder(zips_extract_folder)
         return []
 
 
@@ -46,3 +48,9 @@ def is_zip_encrypted(zip_path):
     except Exception:  # pylint: disable=W0703
         error_files[zip_path] = '압축파일이상'
         return False
+
+
+def _remove_empty_folder(folder_path):
+    """폴더 생성후 압축 시도시 exception이 발생시 폴더를 삭제합니다"""
+    if os.path.exists(folder_path) and not os.listdir(folder_path):
+        os.rmdir(folder_path)
