@@ -38,7 +38,7 @@ def process_folder(folder_path):
                 if file.lower().endswith(tuple(compress_ext)):
                     if is_compressed_exists is False:
                         print("내부 압축파일 발견. 스크립트가 한번 더 진행됩니다.")
-                        is_compressed_exists = True
+                    is_compressed_exists = True
 
     if exclude_files_path:
         for rm_file in exclude_files_path:
