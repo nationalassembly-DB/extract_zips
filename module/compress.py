@@ -5,6 +5,7 @@
 
 
 import os
+import shutil
 import subprocess
 import zipfile
 
@@ -58,6 +59,6 @@ def _remove_empty_folder(folder_path, is_dir_created_by_me):
         if os.path.exists(folder_path) and not os.listdir(folder_path):
             os.rmdir(folder_path)
         if os.path.exists(folder_path) and is_dir_created_by_me:
-            os.rmdir(folder_path)
+            shutil.rmtree(folder_path)
     except Exception:  # pylint: disable=W0703
         error_files[folder_path] = '폴더이상(확인필수)'
