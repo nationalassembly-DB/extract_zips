@@ -14,14 +14,14 @@ error_files = {}
 
 def extract_bandizip(compress_file_path):
     """주어진 압축파일을 Bandizip을 사용하여 압축 해제"""
+    is_dir_created_by_me = False
     try:
-        IS_DIR_CREATED_BY_ME = False
         zips_extract_folder = os.path.join('\\\\?\\', os.path.dirname(
             compress_file_path), os.path.splitext(os.path.basename(compress_file_path))[0])
         compress_file_path = os.path.join('\\\\?\\', compress_file_path)
         if not os.path.exists(zips_extract_folder):
             os.makedirs(zips_extract_folder, exist_ok=False)
-            IS_DIR_CREATED_BY_ME = True
+            is_dir_created_by_me = True
             subprocess.run(
                 ["C:\\Program Files\\Bandizip\\bz.exe", "x", "-y", "-delsrc",
                  f"-o:{zips_extract_folder}", compress_file_path], stdout=subprocess.DEVNULL,
@@ -29,12 +29,12 @@ def extract_bandizip(compress_file_path):
             )
         else:
             error_files[compress_file_path] = '복사본'
-            _remove_empty_folder(zips_extract_folder)
+            _remove_empty_folder(zips_extract_folder, False)
             return []
         return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
     except Exception:  # pylint: disable=W0703
         error_files[compress_file_path] = '압축파일이상'
-        _remove_empty_folder(zips_extract_folder, IS_DIR_CREATED_BY_ME)
+        _remove_empty_folder(zips_extract_folder, is_dir_created_by_me)
         return []
 
 
