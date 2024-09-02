@@ -16,7 +16,6 @@ from module.create_metadata import create_metadata
 
 def process_folder(folder_path):
     """지정된 폴더를 순회하면서 압축파일 처리"""
-    is_compressed_exists = False
     for root, _, files in os.walk(folder_path):
         compress_ext = {'.zip', '.egg', '.7z', '.alz'}
         # .vol2.egg ~ .vol50.egg
@@ -33,19 +32,10 @@ def process_folder(folder_path):
             if compress_file.lower().endswith('.zip'):
                 if is_zip_encrypted(compress_file):
                     continue  # 암호화된 압축 파일 건너뛰기
-            file_list = extract_bandizip(compress_file)
-            for file in file_list:
-                if file.lower().endswith(tuple(compress_ext)):
-                    if is_compressed_exists is False:
-                        print("내부 압축파일 발견. 스크립트가 한번 더 진행됩니다.")
-                    is_compressed_exists = True
+            extract_bandizip(compress_file)
 
     if exclude_files_path:
         for rm_file in exclude_files_path:
             os.remove(rm_file)
-
-    if not is_compressed_exists:
-        print("파일리스트를 생성합니다")
-        create_metadata(folder_path)
-
-    return is_compressed_exists
+    print("파일리스트를 생성합니다")
+    create_metadata(folder_path)
