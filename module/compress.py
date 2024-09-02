@@ -25,8 +25,7 @@ def extract_bandizip(compress_file_path):
             is_dir_created_by_me = True
             subprocess.run(
                 ["C:\\Program Files\\Bandizip\\bz.exe", "x", "-y", "-delsrc",
-                 f"-o:{zips_extract_folder}", compress_file_path], stdout=subprocess.DEVNULL,
-                check=True
+                 f"-o:{zips_extract_folder}", compress_file_path], check=True
             )
         else:
             error_files[compress_file_path] = '복사본'
