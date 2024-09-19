@@ -41,14 +41,14 @@ def _save_excel(df, ws, last_row):
             continue
         ws.cell(row=row_index, column=1, value=cmt)  # 위원회
         ws.cell(row=row_index, column=2, value=row['피감기관'])
-        ws.cell(row=row_index, column=3, value=row['파일명'])
-        ws.cell(row=row_index, column=4, value=row['경로'])
-        ws.cell(row=row_index, column=5, value=row['확장자'])
-        ws.cell(row=row_index, column=6, value=row['파일크기'])
+        ws.cell(row=row_index, column=5, value=row['파일명'])
+        ws.cell(row=row_index, column=6, value=row['경로'])
+        ws.cell(row=row_index, column=7, value=row['확장자'])
+        ws.cell(row=row_index, column=8, value=row['파일크기'])
         if row['파일크기'] == 0:
-            ws.cell(row=row_index, column=7, value='0바이트')
+            ws.cell(row=row_index, column=9, value='0바이트')
         if row['실제경로'] in error_files:
-            ws.cell(row=row_index, column=7, value=error_files[row['실제경로']])
+            ws.cell(row=row_index, column=9, value=error_files[row['실제경로']])
 
 
 def _load_excel(excel_file_path):
@@ -57,7 +57,8 @@ def _load_excel(excel_file_path):
         wb = Workbook()
         ws = wb.active
 
-        headers = ['위원회', '피감기관', '실제 파일명', '경로', '확장자', '파일크기', '특이사항']
+        headers = ['위원회', '피감기관', '위원명', '최상위 압축파일명',
+                   '실제 파일명', '경로', '확장자', '파일크기', '특이사항']
         header_color = PatternFill(start_color='4f81bd',
                                    end_color='4f81bd', fill_type='solid')
 
