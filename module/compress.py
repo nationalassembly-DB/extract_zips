@@ -24,7 +24,7 @@ def extract_bandizip(compress_file_path):
             os.makedirs(zips_extract_folder, exist_ok=False)
             is_dir_created_by_me = True
             subprocess.run(
-                ["C:\\Program Files\\Bandizip\\bz.exe", "x", "-y", "-r", "-delsrc",
+                ["C:\\Program Files\\Bandizip\\bz.exe", "x", "-y", "-delsrc",
                  f"-o:{zips_extract_folder}", compress_file_path], check=True
             )
         else:
