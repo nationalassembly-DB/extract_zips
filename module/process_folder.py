@@ -37,7 +37,7 @@ def process_folder(folder_path):
             for file in file_list:
                 if file.lower().endswith(tuple(compress_ext)):
                     if is_compressed_exists is False:
-                        print("내부 압축파일 발견. 스크립트가 한번 더 진행됩니다.")
+                        print("\n======내부 압축파일 발견. 스크립트가 한번 더 진행됩니다.======\n")
                     is_compressed_exists = True
 
     if exclude_files_path:
@@ -45,6 +45,7 @@ def process_folder(folder_path):
             os.remove(rm_file)
 
     if not is_compressed_exists:
-        print("파일리스트를 생성합니다")
+        print("\n======파일리스트를 생성합니다======\n")
         create_metadata(folder_path)
+
     return is_compressed_exists

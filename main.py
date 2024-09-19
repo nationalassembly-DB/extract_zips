@@ -20,5 +20,4 @@ if __name__ == "__main__":
         CNT += 1
         print(f"압축해제 {CNT}번째 진행 중")
         IS_COMPRESS_EXISTS = process_folder(folder_path)
-    process_folder(folder_path)
     print("모든 압축파일 해제가 완료되었습니다")
