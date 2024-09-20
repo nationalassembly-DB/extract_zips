@@ -17,7 +17,7 @@ from module.create_metadata import create_metadata
 compress_dict = {}
 
 
-def process_folder(folder_path, is_first_try=True):
+def process_folder(folder_path, is_first_try=True):  # pylint : disable=R0912
     """지정된 폴더를 순회하면서 압축파일 처리"""
     is_compressed_exists = False
     for root, _, files in os.walk(folder_path):
@@ -42,10 +42,9 @@ def process_folder(folder_path, is_first_try=True):
                 for file_path in file_list:
                     compress_dict[file_path] = compress_path
             else:
-                tmp = compress_dict[compress_file]
                 for file_path in file_list:
                     if file_path not in compress_dict:
-                        compress_dict[file_path] = tmp
+                        compress_dict[file_path] = compress_dict[compress_file]
 
             for file in file_list:
                 if file.lower().endswith(tuple(compress_ext)):
