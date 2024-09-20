@@ -30,12 +30,15 @@ def extract_bandizip(compress_file_path):
         else:
             error_files[compress_file_path] = '복사본'
             _remove_empty_folder(zips_extract_folder, False)
-            return []
-        return [os.path.join(zips_extract_folder, f) for f in os.listdir(zips_extract_folder)]
+            return [], compress_file_path
+        file_list = [os.path.join(zips_extract_folder, f)
+                     for f in os.listdir(zips_extract_folder)]
+
+        return file_list, compress_file_path
     except Exception:  # pylint: disable=W0703
         error_files[compress_file_path] = '압축파일이상'
         _remove_empty_folder(zips_extract_folder, is_dir_created_by_me)
-        return []
+        return [], compress_file_path
 
 
 def is_zip_encrypted(zip_path):

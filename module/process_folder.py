@@ -14,7 +14,10 @@ from module.process_compressed import extract_bandizip, is_zip_encrypted, error_
 from module.create_metadata import create_metadata
 
 
-def process_folder(folder_path):
+compress_dict = {}
+
+
+def process_folder(folder_path, is_first_try=True):
     """지정된 폴더를 순회하면서 압축파일 처리"""
     is_compressed_exists = False
     for root, _, files in os.walk(folder_path):
@@ -30,10 +33,20 @@ def process_folder(folder_path):
         for compress_file in compress_file_path:
             if compress_file in error_files:
                 continue  # 에러가 발생한 파일 건너뛰기
-            if compress_file.lower().endswith('.zip'):
-                if is_zip_encrypted(compress_file):
-                    continue  # 암호화된 압축 파일 건너뛰기
-            file_list = extract_bandizip(compress_file)
+            if compress_file.lower().endswith('.zip') and is_zip_encrypted(compress_file):
+                continue  # 암호화된 압축 파일 건너뛰기
+
+            file_list, compress_path = extract_bandizip(compress_file)
+
+            if is_first_try:
+                for file_path in file_list:
+                    compress_dict[file_path] = compress_path
+            else:
+                tmp = compress_dict[compress_file]
+                for file_path in file_list:
+                    if file_path not in compress_dict:
+                        compress_dict[file_path] = tmp
+
             for file in file_list:
                 if file.lower().endswith(tuple(compress_ext)):
                     if is_compressed_exists is False:
@@ -46,7 +59,7 @@ def process_folder(folder_path):
 
     if not is_compressed_exists:
         print("\n======파일리스트를 생성합니다======\n")
-        create_metadata(folder_path)
+        create_metadata(folder_path, compress_dict)
     else:
         print("\n======스크립트를 다시 실행합니다======\n")
-        process_folder(folder_path)
+        process_folder(folder_path, False)
