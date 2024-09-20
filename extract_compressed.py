@@ -24,13 +24,8 @@ def main():
         return main()
 
     folder_path = os.path.join("\\\\?\\", folder_path)
-    cnt = 1
-    print(f"압축해제 {cnt}번째 진행 중")
-    is_compressed_exists = process_folder(folder_path)
-    while is_compressed_exists:
-        cnt += 1
-        print(f"압축해제 {cnt}번째 진행 중")
-        is_compressed_exists = process_folder(folder_path)
+    process_folder(folder_path)
+
     print("\n~~~모든 압축파일 해제가 완료되었습니다~~~")
 
     return main()

@@ -47,5 +47,6 @@ def process_folder(folder_path):
     if not is_compressed_exists:
         print("\n======파일리스트를 생성합니다======\n")
         create_metadata(folder_path)
-
-    return is_compressed_exists
+    else:
+        print("\n======스크립트를 다시 실행합니다======\n")
+        process_folder(folder_path)
