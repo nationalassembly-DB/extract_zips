@@ -10,7 +10,7 @@
 import os
 
 
-from module.compress import extract_bandizip, is_zip_encrypted, error_files
+from module.process_compressed import extract_bandizip, is_zip_encrypted, error_files
 from module.create_metadata import create_metadata
 
 

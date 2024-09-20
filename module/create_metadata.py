@@ -11,7 +11,7 @@ from openpyxl.styles import PatternFill
 from natsort import natsorted
 
 
-from module.compress import error_files
+from module.process_compressed import error_files
 
 
 def create_metadata(folder_path):
