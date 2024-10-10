@@ -43,8 +43,10 @@ def process_folder(folder_path, is_first_try=True):  # pylint: disable=R0912
                     compress_dict[file_path] = compress_path
             else:
                 for file_path in file_list:
-                    if file_path not in compress_dict:
+                    if file_path in compress_dict:
                         compress_dict[file_path] = compress_dict[compress_file]
+                    else:
+                        pass
 
             for file in file_list:
                 if file.lower().endswith(tuple(compress_ext)):
