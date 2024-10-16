@@ -50,8 +50,6 @@ def process_folder(folder_path, is_first_try=True):  # pylint: disable=R0912
 
             for file in file_list:
                 if file.lower().endswith(tuple(compress_ext)):
-                    if is_compressed_exists is False:
-                        print("\n======내부 압축파일 발견. 스크립트가 한번 더 진행됩니다.======\n")
                     is_compressed_exists = True
 
     if exclude_files_path:
