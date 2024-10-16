@@ -11,6 +11,7 @@ from openpyxl.styles import PatternFill
 from natsort import natsorted
 
 
+from module.data import person_name
 from module.process_compressed import error_files
 
 
@@ -42,6 +43,13 @@ def _save_excel(df, ws, last_row, compress_dict):
 
         ws.cell(row=row_index, column=1, value=cmt)
         ws.cell(row=row_index, column=2, value=row['피감기관'])
+        if cmt in person_name:
+            members = person_name[cmt]
+            for member in members:
+                if member in row['경로']:
+                    ws.cell(row=row_index, column=3, value=f"{member} 위원")
+                else:
+                    ws.cell(row=row_index, column=3, value=None)
         if compress_dict is not None and row['실제경로'] in compress_dict:
             ws.cell(row=row_index, column=4,
                     value=compress_dict[row['실제경로']])

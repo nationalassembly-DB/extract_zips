@@ -27,7 +27,7 @@ def main():
     folder_path = os.path.join("\\\\?\\", folder_path)
     process_folder(folder_path)
 
-    print("\n~~~모든 압축파일 해제가 완료되었습니다~~~")
+    print("\n~~~모든 압축파일 해제가 완료되었습니다~~~\n")
 
     return main()
 
