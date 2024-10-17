@@ -25,7 +25,7 @@ def create_metadata(folder_path):
     wb.save(excel_path)
 
 
-def _save_excel(df, ws, last_row):
+def _save_excel(df, ws, last_row):  # pylint: disable=R0912
     """엑셀파일에 df를 불러와 값을 입력합니다"""
     for index, row in df.iterrows():
         row_index = last_row + index + 1
