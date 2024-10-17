@@ -15,17 +15,17 @@ from module.data import person_name
 from module.process_compressed import error_files
 
 
-def create_metadata(folder_path, compress_dict):
+def create_metadata(folder_path):
     """엑셀 파일과 리스트를 종합하여 엑셀파일을 생성합니다"""
     excel_path = os.path.join(folder_path, '파일리스트.xlsx')
     df = _dir_to_dic(folder_path)
     wb = _load_excel(excel_path)
     ws = wb.active
-    _save_excel(df, ws, ws.max_row, compress_dict)
+    _save_excel(df, ws, ws.max_row)
     wb.save(excel_path)
 
 
-def _save_excel(df, ws, last_row, compress_dict):
+def _save_excel(df, ws, last_row):
     """엑셀파일에 df를 불러와 값을 입력합니다"""
     for index, row in df.iterrows():
         row_index = last_row + index + 1
@@ -50,9 +50,12 @@ def _save_excel(df, ws, last_row, compress_dict):
                     ws.cell(row=row_index, column=3, value=f"{member} 위원")
                 else:
                     ws.cell(row=row_index, column=3, value=None)
-        if compress_dict is not None and row['실제경로'] in compress_dict:
-            ws.cell(row=row_index, column=4,
-                    value=compress_dict[row['실제경로']])
+        with open('./log/zip_file.txt', 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+
+        for line in lines:
+            if str(row['경로']).startswith(line):
+                ws.cell(row=row_index, column=4, value=line)
         ws.cell(row=row_index, column=5, value=row['파일명'])
         ws.cell(row=row_index, column=6, value=row['경로'])
         ws.cell(row=row_index, column=7, value=row['확장자'])

@@ -27,6 +27,9 @@ def extract_bandizip(compress_file_path):
                 ["C:\\Program Files\\Bandizip\\bz.exe", "x", "-y", "-delsrc",
                  f"-o:{zips_extract_folder}", compress_file_path], check=True
             )
+            with open('./log/zip_file.txt', 'a', encoding='utf-8') as file:
+                file.write(zips_extract_folder + '\n')
+
         else:
             error_files[compress_file_path] = '복사본'
             _remove_empty_folder(zips_extract_folder, False)
@@ -34,11 +37,11 @@ def extract_bandizip(compress_file_path):
         file_list = [os.path.join(zips_extract_folder, f)
                      for f in os.listdir(zips_extract_folder)]
 
-        return file_list, compress_file_path
+        return file_list
     except Exception:  # pylint: disable=W0703
         error_files[compress_file_path] = '압축파일이상'
         _remove_empty_folder(zips_extract_folder, is_dir_created_by_me)
-        return [], compress_file_path
+        return []
 
 
 def is_zip_encrypted(zip_path):
