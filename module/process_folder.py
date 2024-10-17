@@ -47,6 +47,6 @@ def process_folder(folder_path, try_nums=1):  # pylint: disable=R0912
         print("\n======파일리스트를 생성합니다======\n")
         create_metadata(folder_path)
     else:
-        print("\n======스크립트를 다시 실행합니다======\n")
-        process_folder(folder_path)
         try_nums += 1
+        print(f"\n======({try_nums}번째) 스크립트를 다시 실행합니다======\n")
+        process_folder(folder_path, try_nums)
