@@ -14,7 +14,7 @@ from module.process_compressed import extract_bandizip, is_zip_encrypted, error_
 from module.create_metadata import create_metadata
 
 
-def process_folder(folder_path):  # pylint: disable=R0912
+def process_folder(folder_path, try_nums=1):  # pylint: disable=R0912
     """지정된 폴더를 순회하면서 압축파일 처리"""
     is_compressed_exists = False
     for root, _, files in os.walk(folder_path):
@@ -33,7 +33,7 @@ def process_folder(folder_path):  # pylint: disable=R0912
             if compress_file.lower().endswith('.zip') and is_zip_encrypted(compress_file):
                 continue  # 암호화된 압축 파일 건너뛰기
 
-            file_list = extract_bandizip(compress_file)
+            file_list = extract_bandizip(compress_file, try_nums, folder_path)
 
             for file in file_list:
                 if file.lower().endswith(tuple(compress_ext)):
@@ -49,3 +49,4 @@ def process_folder(folder_path):  # pylint: disable=R0912
     else:
         print("\n======스크립트를 다시 실행합니다======\n")
         process_folder(folder_path)
+        try_nums += 1

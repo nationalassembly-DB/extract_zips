@@ -13,7 +13,7 @@ import zipfile
 error_files = {}
 
 
-def extract_bandizip(compress_file_path):
+def extract_bandizip(compress_file_path, try_nums, folder_path):
     """주어진 압축파일을 Bandizip을 사용하여 압축 해제"""
     is_dir_created_by_me = False
     try:
@@ -27,13 +27,15 @@ def extract_bandizip(compress_file_path):
                 ["C:\\Program Files\\Bandizip\\bz.exe", "x", "-y", "-delsrc",
                  f"-o:{zips_extract_folder}", compress_file_path], check=True
             )
-            with open('./log/zip_file.txt', 'a', encoding='utf-8') as file:
-                file.write(zips_extract_folder + '\n')
+            if try_nums == 1:
+                with open('./log/zip_file.txt', 'a', encoding='utf-8') as file:
+                    file.write(os.path.relpath(zips_extract_folder,
+                                               os.path.dirname(folder_path)) + '\n')
 
         else:
             error_files[compress_file_path] = '복사본'
             _remove_empty_folder(zips_extract_folder, False)
-            return [], compress_file_path
+            return []
         file_list = [os.path.join(zips_extract_folder, f)
                      for f in os.listdir(zips_extract_folder)]
 
