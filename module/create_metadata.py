@@ -54,7 +54,8 @@ def _save_excel(df, ws, last_row):  # pylint: disable=R0912
             lines = file.readlines()
 
         for line in lines:
-            if str(row['경로']).startswith(line.strip()):
+            new_line = lines[:-4]
+            if str(row['경로']).startswith(new_line.strip()):
                 ws.cell(row=row_index, column=4, value=line)
         ws.cell(row=row_index, column=5, value=row['파일명'])
         ws.cell(row=row_index, column=6, value=row['경로'])
