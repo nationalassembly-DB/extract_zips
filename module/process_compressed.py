@@ -29,7 +29,7 @@ def extract_bandizip(compress_file_path, try_nums, folder_path):
             )
             if try_nums == 1:
                 with open('./log/zip_file.txt', 'a', encoding='utf-8') as file:
-                    file.write(os.path.relpath(compress_file_path,
+                    file.write(os.path.relpath(zips_extract_folder,
                                                os.path.dirname(folder_path)) + '\n')
         else:
             error_files[compress_file_path] = '복사본'
