@@ -7,6 +7,7 @@ main함수.
 import os
 
 
+from module.log import get_log_path
 from module.process_folder import process_folder
 
 
@@ -22,8 +23,8 @@ def main():
         return 0
 
     if folder_path == '9':
-        if os.path.exists('./log/zip_file.txt'):
-            os.remove('./log/zip_file.txt')
+        if os.path.exists(get_log_path()):
+            os.remove(get_log_path())
             print("로그 파일이 정상적으로 삭제되었습니다")
         else:
             print("로그 파일이 존재하지 않습니다.")

@@ -9,6 +9,8 @@ import shutil
 import subprocess
 import zipfile
 
+from module.log import get_log_path
+
 
 error_files = {}
 compress_ext = {'.zip', '.egg', '.7z', '.alz'}
@@ -29,11 +31,11 @@ def extract_bandizip(compress_file_path, try_nums, folder_path):
                  f"-o:{zips_extract_folder}", compress_file_path], check=True
             )
             if try_nums == 1:
-                with open('./log/zip_file.txt', 'a', encoding='utf-8') as file:
+                with open(get_log_path(), 'a', encoding='utf-8') as file:
                     file.write(os.path.relpath(zips_extract_folder,
                                                os.path.dirname(folder_path)) + '\n')
-            for file in os.listdir(compress_file_path):
-                if os.path.isfile(os.path.join(compress_file_path, file)):
+            for file in os.listdir(zips_extract_folder):
+                if os.path.isfile(os.path.join(zips_extract_folder, file)):
                     _, ext = os.path.splitext(file)
                     if ext in compress_ext:
                         return True

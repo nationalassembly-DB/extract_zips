@@ -12,6 +12,7 @@ from natsort import natsorted
 
 
 from module.data import person_name
+from module.log import get_log_path
 from module.process_compressed import error_files
 
 
@@ -50,7 +51,7 @@ def _save_excel(df, ws, last_row):  # pylint: disable=R0912
                     ws.cell(row=row_index, column=3, value=f"{member} 위원")
                 else:
                     ws.cell(row=row_index, column=3, value=None)
-        with open('./log/zip_file.txt', 'r', encoding='utf-8') as file:
+        with open(get_log_path(), 'r', encoding='utf-8') as file:
             lines = file.readlines()
 
         for line in lines:
