@@ -33,11 +33,8 @@ def process_folder(folder_path, try_nums=1):  # pylint: disable=R0912
             if compress_file.lower().endswith('.zip') and is_zip_encrypted(compress_file):
                 continue  # 암호화된 압축 파일 건너뛰기
 
-            file_list = extract_bandizip(compress_file, try_nums, folder_path)
-
-            for file in file_list:
-                if file.lower().endswith(tuple(compress_ext)):
-                    is_compressed_exists = True
+            if extract_bandizip(compress_file, try_nums, folder_path):
+                is_compressed_exists = True
 
     if exclude_files_path:
         for rm_file in exclude_files_path:

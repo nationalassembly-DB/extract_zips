@@ -11,6 +11,7 @@ import zipfile
 
 
 error_files = {}
+compress_ext = {'.zip', '.egg', '.7z', '.alz'}
 
 
 def extract_bandizip(compress_file_path, try_nums, folder_path):
@@ -31,19 +32,21 @@ def extract_bandizip(compress_file_path, try_nums, folder_path):
                 with open('./log/zip_file.txt', 'a', encoding='utf-8') as file:
                     file.write(os.path.relpath(zips_extract_folder,
                                                os.path.dirname(folder_path)) + '\n')
+            for file in os.listdir(compress_file_path):
+                if os.path.isfile(os.path.join(compress_file_path, file)):
+                    _, ext = os.path.splitext(file)
+                    if ext in compress_ext:
+                        return True
 
+                return False
         else:
             error_files[compress_file_path] = '복사본'
             _remove_empty_folder(zips_extract_folder, False)
-            return []
-        file_list = [os.path.join(zips_extract_folder, f)
-                     for f in os.listdir(zips_extract_folder)]
-
-        return file_list
+            return False
     except Exception:  # pylint: disable=W0703
         error_files[compress_file_path] = '압축파일이상'
         _remove_empty_folder(zips_extract_folder, is_dir_created_by_me)
-        return []
+        return False
 
 
 def is_zip_encrypted(zip_path):
