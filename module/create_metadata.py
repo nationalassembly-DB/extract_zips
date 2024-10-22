@@ -38,9 +38,6 @@ def _save_excel(df, ws, last_row):  # pylint: disable=R0912
         else:
             cmt = row['위원회']
 
-        if row['파일명'] == '파일리스트.xlsx':
-            continue
-
         ws.cell(row=row_index, column=1, value=cmt)
         ws.cell(row=row_index, column=2, value=row['피감기관'])
         if cmt in person_name:
