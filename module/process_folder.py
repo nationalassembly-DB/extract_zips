@@ -19,8 +19,6 @@ compress_ext = {'.zip', '.egg', '.7z', '.alz'}
 
 def process_folder(folder_path, excel_path, try_nums=1):  # pylint: disable=R0912
     """지정된 폴더를 순회하면서 압축파일 처리"""
-    is_compressed_exists = False
-
     for root, _, files in os.walk(folder_path):
         # .vol2.egg ~ .vol50.egg
         exclude_patterns = {f'.vol{i}.egg' for i in range(2, 51)}
