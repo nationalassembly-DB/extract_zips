@@ -16,9 +16,8 @@ from module.log import get_log_path
 from module.process_compressed import error_files
 
 
-def create_metadata(folder_path):
+def create_metadata(folder_path, excel_path):
     """엑셀 파일과 리스트를 종합하여 엑셀파일을 생성합니다"""
-    excel_path = os.path.join(folder_path, '파일리스트.xlsx')
     df = _dir_to_dic(folder_path)
     wb = _load_excel(excel_path)
     ws = wb.active

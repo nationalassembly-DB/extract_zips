@@ -45,6 +45,9 @@ def extract_bandizip(compress_file_path, try_nums, folder_path):
             error_files[compress_file_path] = '복사본'
             _remove_empty_folder(zips_extract_folder, False)
             return False
+    except FileNotFoundError:
+        print("로그 파일을 찾을 수 없습니다. 실행 파일을 다른 곳에 위치한 후 다시 시도하세요")
+        return 0
     except Exception:  # pylint: disable=W0703
         error_files[compress_file_path] = '압축파일이상'
         _remove_empty_folder(zips_extract_folder, is_dir_created_by_me)

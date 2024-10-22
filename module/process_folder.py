@@ -17,9 +17,10 @@ from module.create_metadata import create_metadata
 compress_ext = {'.zip', '.egg', '.7z', '.alz'}
 
 
-def process_folder(folder_path, try_nums=1):  # pylint: disable=R0912
+def process_folder(folder_path, excel_path, try_nums=1):  # pylint: disable=R0912
     """지정된 폴더를 순회하면서 압축파일 처리"""
     is_compressed_exists = False
+
     for root, _, files in os.walk(folder_path):
         # .vol2.egg ~ .vol50.egg
         exclude_patterns = {f'.vol{i}.egg' for i in range(2, 51)}
@@ -44,8 +45,8 @@ def process_folder(folder_path, try_nums=1):  # pylint: disable=R0912
 
     if not is_compressed_exists:
         print("\n======파일리스트를 생성합니다======\n")
-        create_metadata(folder_path)
+        create_metadata(folder_path, excel_path)
     else:
         try_nums += 1
         print(f"\n======({try_nums}번째) 스크립트를 다시 실행합니다======\n")
-        process_folder(folder_path, try_nums)
+        process_folder(folder_path, excel_path, try_nums)
