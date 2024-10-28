@@ -8,7 +8,7 @@ def get_log_path():
     if hasattr(sys, 'frozen'):
         tmp_path = os.path.expanduser('~')
         os.makedirs(f'{tmp_path}\\Desktop\\log_zips', exist_ok=True)
-        return f'{tmp_path}\\Desktop\\log_zips\\zip_file.txt'  # pylint: disable=W0212
+        return f'{tmp_path}\\Desktop\\log_zips\\zip_file.txt'
     os.makedirs('./log', exist_ok=True)
     return './log/zip_file.txt'
 
