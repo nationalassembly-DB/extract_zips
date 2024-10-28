@@ -7,6 +7,7 @@ main함수.
 import os
 
 
+from module.create_metadata import create_metadata
 from module.describe_script import describe
 from module.log import remove_log
 from module.process_folder import process_folder
@@ -18,7 +19,7 @@ def main():
     print("\n>>>>>>압축파일 해제<<<<<<\n")
     print("-"*24)
     select_input = input(
-        "1. 최초 압축해제시도, 2. 해제되지 않은 압축파일 재시도, 5. 프로그램 설명, 9. log삭제, 0. 종료: ")
+        "1. 최초 압축해제시도, 2. 해제되지 않은 압축파일 재시도, 3. 파일리스트만 작성, 5. 프로그램 설명, 9. log삭제, 0. 종료: ")
 
     if select_input == '0':
         return 0
@@ -46,6 +47,8 @@ def main():
         process_folder(folder_path, excel_path, 1)
     elif select_input == '2':
         process_folder(folder_path, excel_path, 90)
+    elif select_input == '3':
+        create_metadata(folder_path, excel_path)
     else:
         print('잘못 입력하셨습니다. 다시 시도하세요')
         return main()
