@@ -23,6 +23,7 @@ def process_folder(folder_path, excel_path, try_nums=1):  # pylint: disable=R091
 
     for root, _, files in os.walk(folder_path):
         # .vol2.egg ~ .vol50.egg
+        # egg 분할압축 파일이 많을 경우 갯수 조절
         exclude_patterns = {f'.vol{i}.egg' for i in range(2, 51)}
         compress_file_path = [os.path.join('\\\\?\\', root, f) for f in files if f.lower().endswith(
             tuple(compress_ext)) and not any(f.lower().endswith(pattern)
@@ -34,9 +35,10 @@ def process_folder(folder_path, excel_path, try_nums=1):  # pylint: disable=R091
             if compress_file in error_files:
                 continue  # 에러가 발생한 파일 건너뛰기
             if compress_file.lower().endswith('.zip') and is_zip_encrypted(compress_file):
-                continue  # 암호화된 압축 파일 건너뛰기
+                continue  # 암호화된 ZIP파일 건너뛰기
 
             result = extract_bandizip(compress_file, try_nums, folder_path)
+            # OR연산자로 result값이 한 번이라도 TRUE인 경우 is_compressed_exists TRUE로 고정
             is_compressed_exists |= result
 
     if exclude_files_path:

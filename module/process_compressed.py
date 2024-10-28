@@ -42,7 +42,7 @@ def extract_bandizip(compress_file_path, try_nums, folder_path):
 
                 return False
         else:
-            error_files[compress_file_path] = '복사본'
+            error_files[compress_file_path] = '압축해제폴더 존재'
             _remove_empty_folder(zips_extract_folder, False)
             return False
     except Exception:  # pylint: disable=W0703
