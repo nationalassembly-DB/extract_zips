@@ -9,6 +9,7 @@ import pandas as pd
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import PatternFill
 from natsort import natsorted
+from tqdm import tqdm
 
 
 from module.data import person_name
@@ -88,7 +89,7 @@ def _dir_to_dic(folder_path):
     file_list = []
 
     for root, _, files in os.walk(folder_path):
-        for file in natsorted(files):
+        for file in tqdm(natsorted(files)):
             file_extension = pathlib.Path(file).suffix.lstrip('.').lower()
             file_path = os.path.join('\\\\?\\', root, file)
             relative_path = os.path.relpath(
