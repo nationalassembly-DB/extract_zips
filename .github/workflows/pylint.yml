@@ -21,6 +21,7 @@ jobs:
         pip install pandas
         pip install openpyxl
         pip install natsort
+        pip install tqdm
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
